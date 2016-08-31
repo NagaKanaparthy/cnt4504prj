@@ -1,5 +1,4 @@
-/*
-    Author:   Nagvarun Kanaparthy
+/*Author:   Nagvarun Kanaparthy
     Program:  Server program that will do the specfications required by
               project 1. It basically listens for clients and spawns threads to
               handle many clients. The program has a 2 classes. one class for
@@ -154,3 +153,4 @@ class projectOneMultiServerThread extends Thread {
         return data;
     }
 }
+
