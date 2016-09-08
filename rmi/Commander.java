@@ -1,4 +1,3 @@
-package cnt.prjrmi;
 /*@author Nagavarun Kanaparthy
 * */
 import java.rmi.Remote;
