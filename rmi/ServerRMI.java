@@ -44,8 +44,9 @@ public String getProcess(){ return getCommand("ps aux"); }
 private static String getCommand(String cmd){
     String data = "";
     try {
+        System.out.println("Command Requsted : " + cmd);
         Process process = Runtime.getRuntime().exec(cmd);
-        //attempt to initializing buffers
+        //attempt to initializing buffer
         BufferedReader stdInput = new BufferedReader(
             new InputStreamReader(process.getInputStream()));
         //read the output from the command
