@@ -7,7 +7,6 @@ import java.util.concurrent.*;
 
 public class iterativeServer{
 	private static LinkedBlockingQueue<Socket> clientsToServe;
-	private static ServerSocket listeningSocket;
 	private static final int serverPortNumber = 3515;
 
 	public static void main(String[] args){
@@ -18,7 +17,7 @@ processing thread (child)
 				process command from q and respond to approiate client
 */
 		try{
-			listeningSocket = new ServerSocket(3515);
+			ServerSocket listeningSocket = new ServerSocket(3515);
 			while(true){
 				Socket newClient = listeningSocket.accept();
 				if(newClient != null){
@@ -66,7 +65,7 @@ processing thread (child)
 								return;
 		}
 	}
-}
+}/*
 class ProcessingThread extends HandlingThread{
 	private LinkedBlockingQueue<Socket> clientQueue;
 	private final boolean DEBUG_MODE = true;
@@ -109,7 +108,7 @@ class ProcessingThread extends HandlingThread{
 		}
 	}
 
-}
+}*/
 class CommandCaller{
 	public static final String menu = "1. Host current Date and Time\n2. Host uptime\n3. Host memory use\n4. Host Netstat\n5. Host current users\n6. Host running processes\n7. Quit";
 	/*
