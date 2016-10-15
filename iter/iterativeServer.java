@@ -30,7 +30,7 @@ processing thread (child)
 			System.exit(-1);
 		}
 	}
-	public static void handleClient(Socket socket){
+	public static void handleClient(Socket socket)throws IOException{
 		PrintWriter out;
 		BufferedReader in;
 		String inputLine;
