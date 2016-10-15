@@ -20,7 +20,8 @@ processing thread (child)
 		try{
 			listeningSocket = new ServerSocket(3515);
 			//Spawn Processing Thread
-
+			clientsToServe = new LinkedBlockingQueue<Socket>();
+			new ProcessingThread(clientsToServe).start();
 			//Listen for clients
 			while(true){
 				listen();
@@ -34,7 +35,7 @@ processing thread (child)
 	private static void listen(){
 		//add newClient
 		try{
-			Socket newClient = this.listeningSocket.accept();
+			Socket newClient = listeningSocket.accept();
 			if(clientsToServe.offer(newClient, 1L,TimeUnit.SECONDS) != true){
 				System.out.println(":L - Listing");
 			}
@@ -55,7 +56,8 @@ class ProcessingThread extends HandlingThread{
 			while(true){
 				//take element from q
 				Socket client = this.clientQueue.take();
-				this.handleClient(client);
+				if(client != null)
+					this.handleClient(client);
 			}
 		}
 		catch(Exception e){
