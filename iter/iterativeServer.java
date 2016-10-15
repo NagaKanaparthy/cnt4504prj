@@ -31,13 +31,11 @@ processing thread (child)
 		}
 	}
 	public static void handleClient(Socket socket)throws IOException{
-		PrintWriter out;
-		BufferedReader in;
+		PrintWriter out  = new PrintWriter(socket.getOutputStream(), true);
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+			socket.getInputStream()));;
 		String inputLine;
 		try{
-			out = new PrintWriter(socket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(
-				socket.getInputStream()));
 			//return message to client and print
 			System.out.println("Client connected on port: " + socket.getPort());
 			out.println("Connection Accepted");
