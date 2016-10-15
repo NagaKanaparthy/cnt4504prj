@@ -63,6 +63,8 @@ class ProcessingThread extends HandlingThread{
 					System.out.println(":K - Inserted In Successfully");
 				if(client != null)
 					handleClient(client);
+				else
+					Thread.sleep(10);
 			}
 		}
 		catch(Exception e){
