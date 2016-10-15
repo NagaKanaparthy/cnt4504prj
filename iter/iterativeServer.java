@@ -33,7 +33,8 @@ processing thread (child)
 	}
 	private static void listen(){
 		//add newClient
-		try(Socket newClient = listeningSocket.accept()){
+		try{
+			Socket newClient = listeningSocket.accept()
 			while(clientsToServe.offer(newClient, 1L,TimeUnit.SECONDS) != true){
 				System.out.println(":L - Listing");
 			}
