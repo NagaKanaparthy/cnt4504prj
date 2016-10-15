@@ -62,7 +62,7 @@ class ProcessingThread extends HandlingThread{
 				if(this.DEBUG_MODE)
 					System.out.println(":K - Inserted In Successfully");
 				if(client != null)
-					this.handleClient(client);
+					handleClient(client);
 			}
 		}
 		catch(Exception e){
