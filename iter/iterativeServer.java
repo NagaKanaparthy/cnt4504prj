@@ -56,15 +56,17 @@ class ProcessingThread extends HandlingThread{
 		try{
 			while(true){
 				//take element from q
-				if(this.DEBUG_MODE)
-					System.out.println(":O - got Here");
+				//if(this.DEBUG_MODE)
+				//	System.out.println(":O - got Here");
 				Socket client = this.clientQueue.take();
-				if(this.DEBUG_MODE)
-					System.out.println(":K - Inserted In Successfully");
-				if(client != null)
+				if(client != null){
 					handleClient(client);
+					if(this.DEBUG_MODE)
+						System.out.println(":) -  Client Served");
+				}
 				else
 					Thread.sleep(10);
+				System.out.println("loop");
 			}
 		}
 		catch(Exception e){
@@ -80,7 +82,7 @@ class ProcessingThread extends HandlingThread{
 			in = new BufferedReader(new InputStreamReader(
 				socket.getInputStream()));
 			//return message to client and print
-								System.out.println("Client connected on port: " + socket.getPort());
+			System.out.println("Client connected on port: " + socket.getPort());
 			out.println("Connection Accepted");
 			//loop
 			while(true){
