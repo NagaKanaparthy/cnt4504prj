@@ -18,10 +18,9 @@ public class serverMultiThreaded {
         System.out.println("Server Started Up");
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
             while (true) {
-	            new projectOneMultiServerThread(serverSocket.accept()).start();
-	        }
-        }
-        catch (IOException e) {
+                new projectOneMultiServerThread(serverSocket.accept()).start();
+            }
+        } catch (IOException e) {
             System.err.println("Could not listen on port " + portNumber);
             System.exit(-1);
         }
@@ -53,16 +52,16 @@ class projectOneMultiServerThread extends Thread {
         String inputLine;
         String menu = "1. Host current Date and Time\n2. Host uptime\n3. Host memory use\n4. Host Netstat\n5. Host current users\n6. Host running processes\n7. Quit";
         //attempt to set up input and output streams
-        try{
+        try {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(
-                    new InputStreamReader(
+                new InputStreamReader(
                     socket.getInputStream()));
             //return message to client and print
             System.out.println("Client connected on port: " + socket.getPort());
             out.println("Connection Accepted");
             //loop
-            while(true){
+            while(true) {
                 //print out menu
                 out.println(menu);
                 //let client know server is done messaging
@@ -72,7 +71,7 @@ class projectOneMultiServerThread extends Thread {
                 //respond with correct response
                 out.println(respondData(inputLine));
                 //checkes if cmd was the exit Option
-                if(Integer.parseInt(inputLine) == 7){
+                if(Integer.parseInt(inputLine) == 7) {
                     break;
                 }
                 //end of response fix
@@ -80,8 +79,7 @@ class projectOneMultiServerThread extends Thread {
             }
             socket.close();
             System.out.println("Client on port: " + socket.getPort()+" Exited");
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return;
         }
@@ -95,34 +93,34 @@ class projectOneMultiServerThread extends Thread {
         from the user.
       Return: string with the data from the user option.
     */
-    public static String respondData(String input){
+    public static String respondData(String input) {
         int value = Integer.parseInt(input);
         String response = null;
-        switch(value){
-            case 1:
-                response = getCommandResults("date");
-                break;
-            case 2:
-                response = getCommandResults("uptime");
-                break;
-            case 3:
-                response = getCommandResults("free -m");
-                break;
-            case 4:
-                response = getCommandResults("netstat");
-                break;
-            case 5:
-                response = getCommandResults("who");
-                break;
-            case 6:
-                response = getCommandResults("ps aux");
-                break;
-            case 7:
-                response = "Exit";
-                break;
-            default:
-                response = "Not a vaild selection, please choose";
-                break;
+        switch(value) {
+        case 1:
+            response = getCommandResults("date");
+            break;
+        case 2:
+            response = getCommandResults("uptime");
+            break;
+        case 3:
+            response = getCommandResults("free -m");
+            break;
+        case 4:
+            response = getCommandResults("netstat");
+            break;
+        case 5:
+            response = getCommandResults("who");
+            break;
+        case 6:
+            response = getCommandResults("ps aux");
+            break;
+        case 7:
+            response = "Exit";
+            break;
+        default:
+            response = "Not a vaild selection, please choose";
+            break;
         }
         return response;
     }
@@ -134,7 +132,7 @@ class projectOneMultiServerThread extends Thread {
         from the user.
       Return: string with the data from command result.
     */
-    public static String getCommandResults(String cmd){
+    public static String getCommandResults(String cmd) {
         String data = "";
         try {
             Process process = Runtime.getRuntime().exec(cmd);
@@ -146,8 +144,7 @@ class projectOneMultiServerThread extends Thread {
             while ((s = stdInput.readLine()) != null) {
                 data += "\n" + s;
             }
-        }
-        catch(Exception e){
+        } catch(Exception e) {
             data = "error";
         }
         return data;
