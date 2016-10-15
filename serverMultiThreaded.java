@@ -11,7 +11,7 @@ import java.io.*;
   Class: serverMultiThreaded
   Purpose: to run the program and handle Socket Connection.s
 */
-public class threadedServer {
+public class serverMultiThreaded {
     public static void main(String[] args) throws IOException {
         //This is my portNumber
         int portNumber = 3515;
@@ -153,4 +153,3 @@ class projectOneMultiServerThread extends Thread {
         return data;
     }
 }
-
