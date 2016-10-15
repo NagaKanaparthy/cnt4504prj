@@ -9,7 +9,7 @@ import java.net.*;
 public class client {
     public static void main(String[] args) throws IOException {
         //default hostname
-        String hostName = getHostname(args[0]);
+        String hostName = getHostname(args);
         int port = 3515;
         Socket clientSocket = new Socket(hostName, port);
         //Attempt To open communications between the server and client
@@ -51,10 +51,10 @@ public class client {
         System.out.println("Goodbye - Session Complete");
         clientSocket.close();
     }
-    public static String getHostname(String cmdline){
+    public static String getHostname(String[] cmdline){
       String hostName = "192.168.100.124";
       if(cmdline != null) {
-          return cmdline;
+          return cmdline[0];
       } else {
           /*
           System.out.println("No Port in commandline, bye.");
