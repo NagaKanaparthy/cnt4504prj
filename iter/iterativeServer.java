@@ -48,6 +48,7 @@ processing thread (child)
 }
 class ProcessingThread extends HandlingThread{
 	private LinkedBlockingQueue<Socket> clientQueue;
+	private final boolean DEBUG_MODE = true;
 	ProcessingThread(LinkedBlockingQueue<Socket> clientsToServe){
 		this.clientQueue = clientsToServe;
 				}
@@ -55,7 +56,11 @@ class ProcessingThread extends HandlingThread{
 		try{
 			while(true){
 				//take element from q
+				if(this.DEBUG_MODE)
+					System.out.println(":O - got Here");
 				Socket client = this.clientQueue.take();
+				if(this.DEBUG_MODE)
+					System.out.println(":K - Inserted In Successfully");
 				if(client != null)
 					this.handleClient(client);
 			}
