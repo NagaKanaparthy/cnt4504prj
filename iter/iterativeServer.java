@@ -62,16 +62,12 @@ class ProcessingThread extends HandlingThread{
 				if(this.DEBUG_MODE)
 					System.out.println(":K - Inserted In Successfully");
 				if(client != null)
-					super.handleClient(client);
+					handleClient(client);
 			}
 		}
 		catch(Exception e){
 			System.out.println("Failed to extract item from q\n" + e.toString());
 		}
-	}
-}
-class HandlingThread extends Thread{
-	public void run(){
 	}
 	public void handleClient(Socket socket){
 		PrintWriter out;
