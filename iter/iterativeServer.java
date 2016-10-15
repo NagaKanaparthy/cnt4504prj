@@ -21,7 +21,7 @@ processing thread (child)
 			while(true){
 				Socket newClient = listeningSocket.accept();
 				if(newClient != null){
-					this.handleClient(newClient);
+					handleClient(newClient);
 				}
 			}
 		}
