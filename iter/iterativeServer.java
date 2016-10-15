@@ -19,58 +19,16 @@ processing thread (child)
 */
 		try{
 			listeningSocket = new ServerSocket(3515);
-			//Spawn Processing Thread
-			clientsToServe = new LinkedBlockingQueue<Socket>();
-			new ProcessingThread(clientsToServe).start();
-			//Listen for clients
 			while(true){
-				listen();
+				Socket newClient = listeningSocket.accept();
+				if(newClient != null){
+					handleClient(newClient);
+				}
 			}
 		}
 		catch(IOException e){
 			System.err.println("Failed to bind on port : "+serverPortNumber);
 			System.exit(-1);
-		}
-	}
-	private static void listen(){
-		//add newClient
-		try{
-			Socket newClient = listeningSocket.accept();
-			if(clientsToServe.offer(newClient, 1L,TimeUnit.SECONDS) != true){
-				System.out.println(":L - Listing");
-			}
-			System.out.println(":D - Connected");
-		}
-		catch(Exception e){
-												System.err.println("Client Addition ERROR: "+serverPortNumber+e.toString());
-								}
-	}
-}
-class ProcessingThread extends HandlingThread{
-	private LinkedBlockingQueue<Socket> clientQueue;
-	private final boolean DEBUG_MODE = true;
-	ProcessingThread(LinkedBlockingQueue<Socket> clientsToServe){
-		this.clientQueue = clientsToServe;
-				}
-	public void run(){
-		try{
-			while(true){
-				//take element from q
-				//if(this.DEBUG_MODE)
-				//	System.out.println(":O - got Here");
-				Socket client = this.clientQueue.take();
-				if(client != null){
-					handleClient(client);
-					if(this.DEBUG_MODE)
-						System.out.println(":) -  Client Served");
-				}
-				else
-					Thread.sleep(10);
-				System.out.println("loop");
-			}
-		}
-		catch(Exception e){
-			System.out.println("Failed to extract item from q\n" + e.toString());
 		}
 	}
 	public void handleClient(Socket socket){
@@ -108,6 +66,49 @@ class ProcessingThread extends HandlingThread{
 								return;
 		}
 	}
+}
+class ProcessingThread extends HandlingThread{
+	private LinkedBlockingQueue<Socket> clientQueue;
+	private final boolean DEBUG_MODE = true;
+	ProcessingThread(LinkedBlockingQueue<Socket> clientsToServe){
+		this.clientQueue = clientsToServe;
+				}
+
+				private static void listen(){
+					//add newClient
+					try{
+						Socket newClient = listeningSocket.accept();
+						if(clientsToServe.offer(newClient, 1L,TimeUnit.SECONDS) != true){
+							System.out.println(":L - Listing");
+						}
+						System.out.println(":D - Connected");
+					}
+					catch(Exception e){
+															System.err.println("Client Addition ERROR: "+serverPortNumber+e.toString());
+											}
+				}
+	public void run(){
+		try{
+			while(true){
+				//take element from q
+				//if(this.DEBUG_MODE)
+				//	System.out.println(":O - got Here");
+				Socket client = this.clientQueue.take();
+				if(client != null){
+					handleClient(client);
+					if(this.DEBUG_MODE)
+						System.out.println(":) -  Client Served");
+				}
+				else
+					Thread.sleep(10);
+				System.out.println("loop");
+			}
+		}
+		catch(Exception e){
+			System.out.println("Failed to extract item from q\n" + e.toString());
+		}
+	}
+
 }
 class CommandCaller{
 	public static final String menu = "1. Host current Date and Time\n2. Host uptime\n3. Host memory use\n4. Host Netstat\n5. Host current users\n6. Host running processes\n7. Quit";
