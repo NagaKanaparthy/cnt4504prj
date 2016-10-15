@@ -13,9 +13,9 @@ public class iterativeServer{
 	public static void main(String[] args){
 /*
 listening thread (parent)
-        when request came add into handling q
+				when request came add into handling q
 processing thread (child)
-        process command from q and respond to approiate client
+				process command from q and respond to approiate client
 */
 		try{
 			listeningSocket = new ServerSocket(3515);
@@ -40,15 +40,15 @@ processing thread (child)
 			System.out.println(":D - Connected");
 		}
 		catch(Exception e){
-                        System.err.println("Client Addition ERROR: "+serverPortNumber);
-                }
+												System.err.println("Client Addition ERROR: "+serverPortNumber+e.toString());
+								}
 	}
 }
 class ProcessingThread extends HandlingThread{
 	private LinkedBlockingQueue<Socket> clientQueue;
 	ProcessingThread(LinkedBlockingQueue<Socket> clientsToServe){
 		this.clientQueue = clientsToServe;
-        }
+				}
 	public void run(){
 		try{
 			while(true){
@@ -74,7 +74,7 @@ class HandlingThread extends Thread{
 			in = new BufferedReader(new InputStreamReader(
 				socket.getInputStream()));
 			//return message to client and print
-            		System.out.println("Client connected on port: " + socket.getPort());
+								System.out.println("Client connected on port: " + socket.getPort());
 			out.println("Connection Accepted");
 			//loop
 			while(true){
@@ -97,75 +97,75 @@ class HandlingThread extends Thread{
 		}
 		catch (IOException e) {
 			e.printStackTrace();
-            		return;
+								return;
 		}
 	}
 }
 class CommandCaller{
 	public static final String menu = "1. Host current Date and Time\n2. Host uptime\n3. Host memory use\n4. Host Netstat\n5. Host current users\n6. Host running processes\n7. Quit";
 	/*
-      Method Name: respondData
-      Purpose: This will take input and returns to the data from the
-        user option.
-      Parameters: takes an int in form of a string. This int will be the option
-        from the user.
-      Return: string with the data from the user option.
-    */
-    public static String respondData(String input){
-        int value = Integer.parseInt(input);
-        String response = null;
-        switch(value){
-            case 1:
-                response = getCommandResults("date");
-                break;
-            case 2:
-                response = getCommandResults("uptime");
-                break;
-            case 3:
-                response = getCommandResults("free -m");
-                break;
-            case 4:
-                response = getCommandResults("netstat");
-                break;
-            case 5:
-                response = getCommandResults("who");
-                break;
-            case 6:
-                response = getCommandResults("ps aux");
-                break;
-            case 7:
-                response = "Exit";
-                break;
-            default:
-                response = "Not a vaild selection, please choose";
-                break;
-        }
-        return response;
-    }
-    /*
-      Method Name: getCommandResults
-      Purpose: This will handle take a command and returns to the data from the
-          command ran on commandline.
-      Parameters: takes an int in form of a string. This int will be the option
-        from the user.
-      Return: string with the data from command result.
-    */
-    public static String getCommandResults(String cmd){
-        String data = "";
-        try {
-            Process process = Runtime.getRuntime().exec(cmd);
-            //attempt to initializing buffers
-            BufferedReader stdInput = new BufferedReader(
-                new InputStreamReader(process.getInputStream()));
-            //read the output from the command
-            String s = null;
-            while ((s = stdInput.readLine()) != null) {
-                data += "\n" + s;
-            }
-        }
-        catch(Exception e){
-            data = "error";
-        }
-        return data;
-    }
+			Method Name: respondData
+			Purpose: This will take input and returns to the data from the
+				user option.
+			Parameters: takes an int in form of a string. This int will be the option
+				from the user.
+			Return: string with the data from the user option.
+		*/
+		public static String respondData(String input){
+				int value = Integer.parseInt(input);
+				String response = null;
+				switch(value){
+						case 1:
+								response = getCommandResults("date");
+								break;
+						case 2:
+								response = getCommandResults("uptime");
+								break;
+						case 3:
+								response = getCommandResults("free -m");
+								break;
+						case 4:
+								response = getCommandResults("netstat");
+								break;
+						case 5:
+								response = getCommandResults("who");
+								break;
+						case 6:
+								response = getCommandResults("ps aux");
+								break;
+						case 7:
+								response = "Exit";
+								break;
+						default:
+								response = "Not a vaild selection, please choose";
+								break;
+				}
+				return response;
+		}
+		/*
+			Method Name: getCommandResults
+			Purpose: This will handle take a command and returns to the data from the
+					command ran on commandline.
+			Parameters: takes an int in form of a string. This int will be the option
+				from the user.
+			Return: string with the data from command result.
+		*/
+		public static String getCommandResults(String cmd){
+				String data = "";
+				try {
+						Process process = Runtime.getRuntime().exec(cmd);
+						//attempt to initializing buffers
+						BufferedReader stdInput = new BufferedReader(
+								new InputStreamReader(process.getInputStream()));
+						//read the output from the command
+						String s = null;
+						while ((s = stdInput.readLine()) != null) {
+								data += "\n" + s;
+						}
+				}
+				catch(Exception e){
+						data = "error";
+				}
+				return data;
+		}
 }
