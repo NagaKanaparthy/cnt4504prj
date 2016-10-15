@@ -66,7 +66,7 @@ class ProcessingThread extends HandlingThread{
 			}
 		}
 		catch(Exception e){
-			System.out.println("Failed to extract item from q");
+			System.out.println("Failed to extract item from q\n" + e.toString());
 		}
 	}
 }
