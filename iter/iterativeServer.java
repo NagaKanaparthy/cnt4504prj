@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class iterativeServer{
-	private static LinkedBlockingQueue<Socket> clientsToServe;
+	//private static LinkedBlockingQueue<Socket> clientsToServe;
 	private static final int serverPortNumber = 3515;
 
 	public static void main(String[] args){
@@ -21,7 +21,7 @@ processing thread (child)
 			while(true){
 				Socket newClient = listeningSocket.accept();
 				if(newClient != null){
-					handleClient(newClient);
+					this.handleClient(newClient);
 				}
 			}
 		}
@@ -30,7 +30,7 @@ processing thread (child)
 			System.exit(-1);
 		}
 	}
-	public static void handleClient(Socket socket){
+	public void handleClient(Socket socket){
 		PrintWriter out;
 		BufferedReader in;
 		String inputLine;
