@@ -9,7 +9,7 @@ import java.net.*;
 public class client {
     public static void main(String[] args) throws IOException {
         //default hostname
-        String hostName = "139.62.210.150";
+        String hostName = "192.168.100.124";
         //defaults if args not there
         if(args.length != 0 && args[0] != null){
           hostName = args[0];
@@ -42,8 +42,9 @@ public class client {
         }
         int port = 3515;
         Socket clientSocket = new Socket(hostName, port);
-        //Attempt To open communications between the server and client
-        if(clientSocket != null){
+	//Attempt To open communications between the server and client
+	if(clientSocket != null){
+	clientSocket.setKeepAlive(true);
         try(
             //Attempt to create the reciving and outputing communications
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -55,10 +56,11 @@ public class client {
                 new BufferedReader(new InputStreamReader(System.in));
             //Create response Variables
             String serverResponse;
-            String userResponse;
-            while ((serverResponse = in.readLine()) != null) {
-                System.out.println(serverResponse);
-                //the program to exit uses the string "Exit\n"
+	    String userResponse;
+            while (!clientSocket.isClosed()) {
+		if((serverResponse = in.readLine()) != null){
+		//	System.out.println(serverResponse);
+		//the program to exit uses the string "Exit\n"
                 if (serverResponse.equals("Exit")){
                     System.out.println("Goodbye Program Exiting\n");
                     break;
@@ -70,12 +72,16 @@ public class client {
                         out.println(userResponse);
                     }
                 }
+		}
+		else
+			System.out.println("Null");
             }
         }
         catch (IOException e) {
             System.err.println(e.toString());
         }
     }
+	System.out.println("C");
     clientSocket.close();
     }
 }
