@@ -1,4 +1,4 @@
-package Naga.networks;
+//package Naga.networks;
 
 import java.io.*;
 import java.net.*;
@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class iterativeServer{
-	private static LinkedBlockingQueue<Socket> clientsToServe;  
+	private static LinkedBlockingQueue<Socket> clientsToServe;
 	private static ServerSocket listeningSocket;
 	private static final int serverPortNumber = 3515;
 
@@ -20,7 +20,7 @@ processing thread (child)
 		try{
 			listeningSocket = new ServerSocket(3515);
 			//Spawn Processing Thread
-			
+
 			//Listen for clients
 			while(true){
 				listen();
@@ -34,7 +34,10 @@ processing thread (child)
 	private static void listen(){
 		//add newClient
 		try(Socket newClient = listeningSocket.accept()){
-			while(clientsToServe.offer(newClient, 1L,TimeUnit.SECONDS)!= true){}
+			while(clientsToServe.offer(newClient, 1L,TimeUnit.SECONDS) != true){
+				System.out.println(":L - Listing");
+			}
+			System.out.println(":D - Connected");
 		}
 		catch(Exception e){
                         System.err.println("Client Addition ERROR: "+serverPortNumber);
