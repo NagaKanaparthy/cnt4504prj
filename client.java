@@ -116,7 +116,7 @@ public class client {
     System.out.println("Goodbye - Session Complete");
     clientSocket.close();
   }
-  public static void handleMulti() throws Exception{
+  public static void handleMulti(){
     switch(mode){
       case 2:
         //do light load
@@ -147,7 +147,11 @@ public class client {
         } catch(Exception e){}
         break;
     }
-    Thread.sleep(5000);
+    try{
+      Thread.sleep(5000);
+    } catch (Exception e) {
+      System.err.println("Woke");
+    }
   }
 }
 class HeavyThread extends Thread{
