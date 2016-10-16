@@ -301,7 +301,7 @@ class Test{
       PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("t",true)));
       out.println(id+","+val.toString());
     } catch (Exception e) {
-
+      System.out.println("NOOO");
     }
   }
 }
