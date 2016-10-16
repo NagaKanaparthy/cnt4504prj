@@ -48,8 +48,8 @@ class projectOneMultiServerThread extends Thread {
    @Override
     public void run(){
         //Variables
-        PrintWriter out = new PrintWriter();
-        BufferedReader in = new BufferedReader();
+        PrintWriter out;
+        BufferedReader in;
         String inputLine;
         String menu = "1. Host current Date and Time\n2. Host uptime\n3. Host memory use\n4. Host Netstat\n5. Host current users\n6. Host running processes\n7. Quit";
         //attempt to set up input and output streams
@@ -84,14 +84,7 @@ class projectOneMultiServerThread extends Thread {
             return;
         }
         finally{
-          try {
-            in.close();
-            out.close();
-            socket.close();
-          } catch(IOException e){
-            e.printStackTrace();
-            return;
-          }
+          socket.close();
         }
     }
     /*
