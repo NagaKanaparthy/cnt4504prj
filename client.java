@@ -68,7 +68,6 @@ public class client {
         break;
       default:
         handleMulti();
-        System.out.println("Completed Test");
         break;
     }
   }
