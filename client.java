@@ -209,12 +209,7 @@ class HeavyThread extends Thread{
                             if(serverResponse.equals("Select Menu Option")){
                               this.result.timeEndMillis = System.currentTimeMillis();
                               out.println("7");
-                              while(true){
-                                if (serverResponse.equals("Exit")) {
-                                  clientSocket.close();
-                                  return;
-                                }
-                              }
+                              clientSocket.close();
                             }
                           }
                         }
