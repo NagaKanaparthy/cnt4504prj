@@ -48,13 +48,13 @@ processing thread (child)
 				//loop
 				while(true) {
 						//print out menu
-						out.println(menu);
+						out.println(CommandCaller.menu);
 						//let client know server is done messaging
 						out.println("Select Menu Option");
 						//wait for response
 						inputLine = in.readLine();
 						//respond with correct response
-						out.println(respondData(inputLine));
+						out.println(CommandCaller.respondData(inputLine));
 						//checkes if cmd was the exit Option
 						if(Integer.parseInt(inputLine) == 7) {
 								break;
