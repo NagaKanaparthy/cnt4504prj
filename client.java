@@ -92,31 +92,35 @@ class ClientThread extends Thread{
       case 2:
         //do light load
         this.path = "lite"+this.numberClients;
-        FileWriter output = new FileWriter(path, false);
-        output.write("id,time\n");
-        output.close();
-        LiteThread[] threads = new LiteThread[this.numberClients];
-        for(int i = 0; i < this.numberClients; i++){
-          threads[i] = new LiteThread(new Socket(this.hostname,this.port),
-            i,this.path);
-        }
-        for(int i = 0; i < this.numberClients; i++){
-          threads[i].start();
-        }
+        try{
+          FileWriter output = new FileWriter(path, false);
+          output.write("id,time\n");
+          output.close();
+          LiteThread[] threads = new LiteThread[this.numberClients];
+          for(int i = 0; i < this.numberClients; i++){
+            threads[i] = new LiteThread(new Socket(this.hostname,this.port),
+              i,this.path);
+          }
+          for(int i = 0; i < this.numberClients; i++){
+            threads[i].start();
+          }
+        } catch(Exception e){}
         break;
       case 3:
         //do heavy load
         this.path = "heavy"+this.numberClients;
-        FileWriter output = new FileWriter(path, false);
-        output.write("id,time\n");
-        output.close();
-        HeavyThread[] threads = new HeavyThread[this.numberClients];
-        for(int i = 0; i < this.numberClients; i++){
-          threads[i] = new HeavyThread(new Socket(this.hostname,this.port),
-            i,this.path);
-        }
-        for(int i = 0; i < this.numberClients; i++){
-          threads[i].start();
+        try{
+          FileWriter output = new FileWriter(path, false);
+          output.write("id,time\n");
+          output.close();
+          HeavyThread[] threads = new HeavyThread[this.numberClients];
+          for(int i = 0; i < this.numberClients; i++){
+            threads[i] = new HeavyThread(new Socket(this.hostname,this.port),
+              i,this.path);
+          }
+          for(int i = 0; i < this.numberClients; i++){
+            threads[i].start();
+          }
         }
         break;
       default:
@@ -207,7 +211,7 @@ class HeavyThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    temp.logResult(path);
+                                    temp.logResult(path,id);
                                     return;
                                 }
                               }
@@ -217,7 +221,6 @@ class HeavyThread extends Thread{
                     }
                 }
             }
-            temp.logResult(path,id);
         } catch (IOException e) {
             System.err.println(e.toString());
         }
@@ -263,7 +266,7 @@ class LiteThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    temp.logResult(path);
+                                    temp.logResult(path, id);
                                     return;
                                 }
                               }
@@ -273,7 +276,6 @@ class LiteThread extends Thread{
                     }
                 }
             }
-            temp.logResult(path, id);
         } catch (IOException e) {
             System.err.println(e.toString());
         }
