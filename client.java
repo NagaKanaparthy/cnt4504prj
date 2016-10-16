@@ -188,7 +188,7 @@ class HeavyThread extends Thread{
   public void run(){
     performLoad(this.socket);
   }
-  public static void performLoad(Socket clientSocket){
+  public static void performLoad(Socket clientSocket) throws IOException{
     if(clientSocket != null) {
         try(
                 //Attempt to create the reciving and outputing communications
@@ -243,7 +243,7 @@ class LiteThread extends Thread{
   public void run(){
     performLoad(this.socket);
   }
-  public static void performLoad(Socket clientSocket){
+  public static void performLoad(Socket clientSocket) throws IOException{
     if(clientSocket != null) {
         try(
                 //Attempt to create the reciving and outputing communications
