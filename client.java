@@ -209,13 +209,13 @@ class HeavyThread extends Thread{
                               this.result.timeEndMillis = System.currentTimeMillis();
                               out.println("7");
                             }
+                            while(!serverResponse.equals("Exit")){
+                              System.out.println("stuck");
+                            }
+                            clientSocket.close();
                           }
                         }
                     }
-                    if (serverResponse.equals("Exit")) {
-                        clientSocket.close();
-                    }
-
                 }
             }
         } catch (IOException e) {
