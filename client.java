@@ -302,7 +302,7 @@ class Test{
   public void setEnd(long end){
     this.timeEndMillis = end;
   }
-  public void logResult(String path, int id){
+  public void logResult(String path, int id) throws IOException{
     FileWriter output = new FileWriter(path, true);
     output.write(id+","+","+this.toString()+"\n");
     output.close();
