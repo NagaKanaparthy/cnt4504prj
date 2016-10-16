@@ -15,7 +15,7 @@ processing thread (child)
 				process command from q and respond to approiate client
 */
 		try{
-			ServerSocket listeningSocket = new ServerSocket(3515);
+			ServerSocket listeningSocket = new ServerSocket(serverPortNumber);
 			System.out.println("Server Started Up");
 			while(true){
 				Socket newClient = listeningSocket.accept();
@@ -25,7 +25,7 @@ processing thread (child)
 			}
 		}
 		catch(IOException e){
-			System.err.println("Could not listen on port " + portNumber);
+			System.err.println("Could not listen on port " + serverPortNumber);
 			System.exit(-1);
 		}
 	}
