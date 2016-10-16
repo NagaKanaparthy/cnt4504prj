@@ -34,7 +34,7 @@ class multiServerThread extends Thread {
     //global variables
     private Socket socket = null;
     //constructor
-    public projectOneMultiServerThread(Socket socket) {
+    public multiServerThread(Socket socket) {
         this.socket = socket;
     }
     /*
