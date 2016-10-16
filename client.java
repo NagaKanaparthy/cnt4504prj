@@ -297,7 +297,11 @@ class Test{
     return Long.toString(timeEndMillis - timeStartMillis);
   }
   public static void appendToFile(int id, Test val){
-    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("t",true)));
-    out.println(id+","+val.toString());
+    try{
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("t",true)));
+      out.println(id+","+val.toString());
+    } catch (Exception e) {
+
+    }
   }
 }
