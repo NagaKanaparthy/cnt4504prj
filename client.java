@@ -122,6 +122,7 @@ public class client {
     switch(mode){
       case 2:
         //do light load
+        /*
         try{
           LiteThread[] threads = new LiteThread[numClients];
           for(int i = 0; i < numClients; i++){
@@ -139,6 +140,7 @@ public class client {
           }
           System.out.println("Done");
         } catch(Exception e){}
+          */
         break;
       case 3:
         //do heavy load
@@ -154,6 +156,9 @@ public class client {
             threads[i].start();
           }
           //latch.await();
+          for(int i = 0; i < numClients; i++){
+            System.out.println(threads[i].toString());
+          }
           System.out.println("Done");
         } catch(Exception e){}
         break;
@@ -200,69 +205,6 @@ class HeavyThread extends Thread{
                     //reads user's input and forwards it to the Server
                     if(serverResponse.equals("Select Menu Option")) {
                         out.println("4");
-                        while(true){
-                          if((serverResponse = in.readLine()) != null){
-                            if(serverResponse.equals("Select Menu Option")){
-                              res.timeEndMillis = System.currentTimeMillis();
-                              out.println("7");
-                              while(true){
-                                if (serverResponse.equals("Exit")) {
-                                  clientSocket.close();
-                                  return;
-                                }
-                              }
-                            }
-                          }
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            System.err.println(e.toString());
-        }
-    }
-  }
-}
-class LiteThread extends Thread{
-  private Socket socket = null;
-  private int id;
-  private Test result;
-  private CountDownLatch latch;
-  LiteThread(Socket client, int id, CountDownLatch latch){
-    this.socket = client;
-    this.id = id;
-    this.latch = latch;
-  }
-  public String toString(){
-    return this.id+","+result.toString();
-  }
-  @Override
-  public void run(){
-    try{
-      performLoad(this.socket, this.result);
-      Test.appendToFile(this.id,this.result);
-    // latch.countDown();
-    } catch (Exception e) {
-      System.out.println("err");
-    }
-  }
-  public static void performLoad(Socket clientSocket, Test res) throws IOException{
-    if(clientSocket != null) {
-        try(
-                //Attempt to create the reciving and outputing communications
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(
-                new InputStreamReader(clientSocket.getInputStream()));
-            ) {
-            //Create response Variables
-            String serverResponse;
-            res = new Test(System.currentTimeMillis());
-            while (!clientSocket.isClosed()) {
-              //start Timer
-                if((serverResponse = in.readLine()) != null) {
-                    //reads user's input and forwards it to the Server
-                    if(serverResponse.equals("Select Menu Option")) {
-                        out.println("1");
                         while(true){
                           if((serverResponse = in.readLine()) != null){
                             if(serverResponse.equals("Select Menu Option")){
