@@ -59,7 +59,7 @@ processing thread (child)
 						try(Integer.parseInt(inputLine) == 7) {
 								break;
 						}
-						else{
+						catch(Exception e){
 							out.println("Invalid Choice");
 						}
 						//end of response fix
