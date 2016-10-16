@@ -179,7 +179,6 @@ class HeavyThread extends Thread{
   @Override
   public void run(){
     try{
-      System.out.print("DDD");
       this.performLoad(this.socket);
       this.latch.countDown();
 
@@ -209,11 +208,14 @@ class HeavyThread extends Thread{
                             if(serverResponse.equals("Select Menu Option")){
                               this.result.timeEndMillis = System.currentTimeMillis();
                               out.println("7");
-                              clientSocket.close();
                             }
                           }
                         }
                     }
+                    if (serverResponse.equals("Exit")) {
+                        clientSocket.close();
+                    }
+
                 }
             }
         } catch (IOException e) {
