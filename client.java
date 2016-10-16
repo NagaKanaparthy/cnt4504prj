@@ -189,9 +189,9 @@ class HeavyThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                  synchronized (System.out){
+                                  //synchronized (System.out){
                                     System.out.println(id+","+temp.toString());
-                                  }
+                                  //}
                                   return;
                                 }
                               }
