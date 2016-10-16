@@ -217,7 +217,7 @@ class HeavyThread extends Thread{
                     }
                 }
             }
-            temp.logResult();
+            temp.logResult(path,id);
         } catch (IOException e) {
             System.err.println(e.toString());
         }
@@ -273,7 +273,7 @@ class LiteThread extends Thread{
                     }
                 }
             }
-            temp.logResult();
+            temp.logResult(path, id);
         } catch (IOException e) {
             System.err.println(e.toString());
         }
@@ -290,9 +290,9 @@ class Test{
   public void setEnd(long end){
     this.timeEndMillis = end;
   }
-  public void logResult(String path){
+  public void logResult(String path, int id){
     FileWriter output = new FileWriter(path, true);
-    output.write(i+","+","+this.toString()+"\n");
+    output.write(id+","+","+this.toString()+"\n");
     output.close();
   }
   public String toString(){
