@@ -42,8 +42,8 @@ public class client {
                             }
                         }
                         else{
-                          if (userResponse != null) {
-                              out.println(userResponse);
+                          if (serverResponse != null) {
+                              System.out.println(serverResponse);
                           }
                         }
                     }
