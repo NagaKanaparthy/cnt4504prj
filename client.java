@@ -114,13 +114,11 @@ public class client {
     switch(mode){
       case 2:
         //do light load
-        this.path = "lite"+ numClients;
         try{
           System.out.println("id,time\n");
           LiteThread[] threads = new LiteThread[numClients];
           for(int i = 0; i < numClients; i++){
-            threads[i] = new LiteThread(new Socket(this.hostname,this.port),
-              i,this.path);
+            threads[i] = new LiteThread(new Socket(hostName,port),i);
           }
           for(int i = 0; i < numClients; i++){
             threads[i].start();
@@ -129,13 +127,11 @@ public class client {
         break;
       case 3:
         //do heavy load
-        this.path = "heavy"+numClients;
         try{
           System.out.println("id,time\n");
           HeavyThread[] threads = new HeavyThread[numClients];
           for(int i = 0; i < numClients; i++){
-            threads[i] = new HeavyThread(new Socket(this.hostname,this.port),
-              i,this.path);
+            threads[i] = new HeavyThread(new Socket(hostName,port),i);
           }
           for(int i = 0; i < numClients; i++){
             threads[i].start();
@@ -148,11 +144,9 @@ public class client {
 class HeavyThread extends Thread{
   private Socket socket = null;
   private static int id;
-  private static String path;
-  HeavyThread(Socket client, int id, String path){
+  HeavyThread(Socket client, int id){
     this.socket = client;
     this.id = id;
-    this.path = path;
   }
   @Override
   public void run(){
@@ -187,7 +181,7 @@ class HeavyThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    temp.logResult(path,id);
+                                    temp.logResult(id);
                                     return;
                                 }
                               }
@@ -207,11 +201,9 @@ class HeavyThread extends Thread{
 class LiteThread extends Thread{
   private Socket socket = null;
   private static int id;
-  private static String path;
-  LiteThread(Socket client, int id, String path){
+  LiteThread(Socket client, int id){
     this.socket = client;
     this.id = id;
-    this.path = path;
   }
   @Override
   public void run(){
@@ -246,7 +238,7 @@ class LiteThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    temp.logResult(path, id);
+                                    temp.logResult(id);
                                     return;
                                 }
                               }
@@ -272,7 +264,7 @@ class Test{
   public void setEnd(long end){
     this.timeEndMillis = end;
   }
-  public void logResult(String path, int id) throws IOException{
+  public void logResult(int id) throws IOException{
     System.out.println(id+","+","+this.toString()+"\n");
   }
   public String toString(){
