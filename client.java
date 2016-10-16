@@ -116,7 +116,7 @@ public class client {
     System.out.println("Goodbye - Session Complete");
     clientSocket.close();
   }
-  public static void handleMulti(){
+  public static void handleMulti() throws Exception{
     switch(mode){
       case 2:
         //do light load
