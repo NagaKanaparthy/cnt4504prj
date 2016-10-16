@@ -62,7 +62,6 @@ public class client {
     switch(mode){
       case 1:
         handleServer(new Socket(hostName,3515));
-        System.out.println("Fin");
         break;
       default:
         handleMulti();
@@ -182,10 +181,11 @@ class HeavyThread extends Thread{
                           if((serverResponse = in.readLine()) != null){
                             if(serverResponse.equals("Select Menu Option")){
                               temp.timeEndMillis = System.currentTimeMillis();
+                              System.out.println(this.id+temp.toString());
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    Test.logResult(id,temp);
+                                    //Test.logResult(id,temp);
                                     return;
                                 }
                               }
