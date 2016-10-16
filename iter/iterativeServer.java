@@ -30,41 +30,43 @@ processing thread (child)
 			System.exit(-1);
 		}
 	}
-	public static void handleClient(Socket socket)throws IOException{
-		PrintWriter out  = new PrintWriter(socket.getOutputStream(), true);
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-			socket.getInputStream()));;
+	public static void handleClient(Socket socket){
+		//Variables
+		PrintWriter out;
+		BufferedReader in;
 		String inputLine;
-		try{
-			//return message to client and print
-			System.out.println("Client connected on port: " + socket.getPort());
-			out.println("Connection Accepted");
-			//loop
-			while(true){
-				//print out menu
-				out.println(CommandCaller.menu);
-				//let client know server is done messaging
-				out.println("Select Menu Option");
-				//wait for response
-				inputLine = in.readLine();
-				//respond with correct response
-				out.println(CommandCaller.respondData(inputLine));
-				//checkes if cmd was the exit Option
-				if(Integer.parseInt(inputLine) == 7)
-					{ break; }
-				//end of response fix
-				out.println("---Response-Compelete---");
-			}
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-								return;
-		}
-		finally{
-			socket.close();
-			out.close();
-			in.close();
-			System.out.println("Client on port: " + socket.getPort()+" Exited");
+		String menu = "1. Host current Date and Time\n2. Host uptime\n3. Host memory use\n4. Host Netstat\n5. Host current users\n6. Host running processes\n7. Quit";
+		//attempt to set up input and output streams
+		try {
+				out = new PrintWriter(socket.getOutputStream(), true);
+				in = new BufferedReader(
+						new InputStreamReader(
+								socket.getInputStream()));
+				//return message to client and print
+				System.out.println("Client connected on port: " + socket.getPort());
+				out.println("Connection Accepted");
+				//loop
+				while(true) {
+						//print out menu
+						out.println(menu);
+						//let client know server is done messaging
+						out.println("Select Menu Option");
+						//wait for response
+						inputLine = in.readLine();
+						//respond with correct response
+						out.println(respondData(inputLine));
+						//checkes if cmd was the exit Option
+						if(Integer.parseInt(inputLine) == 7) {
+								break;
+						}
+						//end of response fix
+						out.println("---Response-Compelete---");
+				}
+				socket.close();
+				System.out.println("Client on port: " + socket.getPort()+" Exited");
+		} catch (IOException e) {
+				e.printStackTrace();
+				return;
 		}
 	}
 }/*
