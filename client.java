@@ -9,7 +9,7 @@ public class client {
     handleArgs(args);
     switch(mode){
       case 1:
-        new ClientThread(hostName).start();
+        handleServer(new Socket(hostName,3515));
         break;
       case 2:
         new ClientThread(hostName,mode,numClients).start();
@@ -67,6 +67,50 @@ public class client {
       return null;
     }
   }
+  public static void handleServer(Socket clientSocket) throws IOException{
+    if(clientSocket != null) {
+        try(
+                //Attempt to create the reciving and outputing communications
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream()));
+            ) {
+            //if Successful start reading user's input via a buffer stream
+            BufferedReader userInput =
+                new BufferedReader(new InputStreamReader(System.in));
+            //Create response Variables
+            String serverResponse;
+            String userResponse;
+            while (!clientSocket.isClosed()) {
+                if((serverResponse = in.readLine()) != null) {
+                    //	System.out.println(serverResponse);
+                    //the program to exit uses the string "Exit\n"
+                    if (serverResponse.equals("Exit")) {
+                        System.out.println("Goodbye Program Exiting\n");
+                        break;
+                    }
+                    //reads user's input and forwards it to the Server
+                    else if(serverResponse.equals("Select Menu Option")) {
+                        userResponse = userInput.readLine();
+                        if (userResponse != null) {
+                            out.println(userResponse);
+                        }
+                    }
+                    else{
+                      if (serverResponse != null) {
+                          System.out.println(serverResponse);
+                      }
+                    }
+                }
+                //printResponse
+            }
+        } catch (IOException e) {
+            System.err.println(e.toString());
+        }
+    }
+    System.out.println("Goodbye - Session Complete");
+    clientSocket.close();
+  }
 }
 class ClientThread extends Thread{
   //global variables
@@ -123,56 +167,7 @@ class ClientThread extends Thread{
           }
         } catch(Exception e){}
         break;
-      default:
-        try{
-          handleServer(new Socket(this.hostname,this.port));
-        } catch(Exception e){}
-        break;
     }
-  }
-  public static void handleServer(Socket clientSocket) throws IOException{
-    if(clientSocket != null) {
-        try(
-                //Attempt to create the reciving and outputing communications
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(
-                new InputStreamReader(clientSocket.getInputStream()));
-            ) {
-            //if Successful start reading user's input via a buffer stream
-            BufferedReader userInput =
-                new BufferedReader(new InputStreamReader(System.in));
-            //Create response Variables
-            String serverResponse;
-            String userResponse;
-            while (!clientSocket.isClosed()) {
-                if((serverResponse = in.readLine()) != null) {
-                    //	System.out.println(serverResponse);
-                    //the program to exit uses the string "Exit\n"
-                    if (serverResponse.equals("Exit")) {
-                        System.out.println("Goodbye Program Exiting\n");
-                        break;
-                    }
-                    //reads user's input and forwards it to the Server
-                    else if(serverResponse.equals("Select Menu Option")) {
-                        userResponse = userInput.readLine();
-                        if (userResponse != null) {
-                            out.println(userResponse);
-                        }
-                    }
-                    else{
-                      if (serverResponse != null) {
-                          System.out.println(serverResponse);
-                      }
-                    }
-                }
-                //printResponse
-            }
-        } catch (IOException e) {
-            System.err.println(e.toString());
-        }
-    }
-    System.out.println("Goodbye - Session Complete");
-    clientSocket.close();
   }
 }
 class HeavyThread extends Thread{
