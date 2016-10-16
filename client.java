@@ -180,7 +180,7 @@ class HeavyThread extends Thread{
   public void run(){
     try{
       this.performLoad(this.socket);
-      latch.countDown();
+      this.latch.countDown();
     }catch(Exception e){
 
     }
