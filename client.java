@@ -220,7 +220,7 @@ class LiteThread extends Thread{
   private int id;
   private Test result;
   private CountDownLatch latch;
-  LiteThread(Socket client, int id){
+  LiteThread(Socket client, int id, CountDownLatch latch){
     this.socket = client;
     this.id = id;
     this.latch = latch;
