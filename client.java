@@ -53,7 +53,7 @@ public class client {
     }
     public static String getHostname(String[] cmdline){
       String hostName = "192.168.100.124";
-      if(cmdline != null) {
+      if(cmdline.length > 0) {
           return cmdline[0];
       } else {
           /*
