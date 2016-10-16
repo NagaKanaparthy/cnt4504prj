@@ -84,9 +84,14 @@ class projectOneMultiServerThread extends Thread {
             return;
         }
         finally{
-          in.close();
-          out.close();
-          socket.close();
+          try {
+            in.close();
+            out.close();
+            socket.close();
+          } catch(IOException e){
+            e.printStackTrace();
+            return;
+          }
         }
     }
     /*
