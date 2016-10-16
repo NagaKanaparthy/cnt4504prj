@@ -157,7 +157,7 @@ public class client {
           }
           latch.await();
           for(int i = 0; i < numClients; i++){
-            System.out.println(threads[i].toString());
+            System.out.println(id+","+threads[i].toString());
           }
           System.out.println("Done");
         } catch(Exception e){}
