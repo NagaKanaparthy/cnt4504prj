@@ -147,6 +147,7 @@ public class client {
         } catch(Exception e){}
         break;
     }
+    Thread.sleep(5000);
   }
 }
 class HeavyThread extends Thread{
