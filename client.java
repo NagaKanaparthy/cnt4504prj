@@ -5,6 +5,7 @@ public class client {
   private static String hostName;
   private static int mode;
   private static int numClients;
+  private static int port;
   //intialization functions
   public static void handleArgs(String[] args){
     if(args.length > 0){
@@ -22,6 +23,7 @@ public class client {
   }
   public static String getHostname(String[] cmdline){
     String hostName = "192.168.100.124";
+    port = 3515;
     if(cmdline.length > 0) {
         return cmdline[0];
     } else {
@@ -120,7 +122,7 @@ public class client {
             threads[i] = new LiteThread(new Socket(this.hostname,this.port),
               i,this.path);
           }
-          for(int i = 0; i < this.numberClients; i++){
+          for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
         } catch(Exception e){}
@@ -135,7 +137,7 @@ public class client {
             threads[i] = new HeavyThread(new Socket(this.hostname,this.port),
               i,this.path);
           }
-          for(int i = 0; i < this.numberClients; i++){
+          for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
         } catch(Exception e){}
