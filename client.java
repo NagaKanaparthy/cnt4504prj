@@ -233,6 +233,9 @@ class LiteThread extends Thread{
     this.id = id;
     this.latch = latch;
   }
+  public String toString(){
+    return this.id+","+result.toString();
+  }
   @Override
   public void run(){
     try{
