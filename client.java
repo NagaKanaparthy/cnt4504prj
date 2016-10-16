@@ -222,7 +222,7 @@ class LiteThread extends Thread{
         System.out.print(id+","+this.result.toString()+"\n");
       }
     } catch (Exception e) {
-
+      System.out.println("err");
     }
   }
   public static void performLoad(Socket clientSocket, Test res) throws IOException{
