@@ -78,13 +78,11 @@ class projectOneMultiServerThread extends Thread {
                 //end of response fix
                 out.println("---Response-Compelete---");
             }
+            socket.close();
             System.out.println("Client on port: " + socket.getPort()+" Exited");
         } catch (IOException e) {
             e.printStackTrace();
             return;
-        }
-        finally{
-          socket.close();
         }
     }
     /*
