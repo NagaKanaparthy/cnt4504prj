@@ -16,6 +16,7 @@ processing thread (child)
 */
 		try{
 			ServerSocket listeningSocket = new ServerSocket(3515);
+			System.out.println("Server Started Up");
 			while(true){
 				Socket newClient = listeningSocket.accept();
 				if(newClient != null){
@@ -24,7 +25,7 @@ processing thread (child)
 			}
 		}
 		catch(IOException e){
-			System.err.println("Failed to bind on port : "+serverPortNumber);
+			System.err.println("Could not listen on port " + portNumber);
 			System.exit(-1);
 		}
 	}
