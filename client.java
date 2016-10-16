@@ -131,9 +131,6 @@ public class client {
           for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
-          while(containsLiveThread(threads)){
-            Thread.sleep(1000);
-          }
           System.out.println("Done");
         } catch(Exception e){}
         break;
@@ -148,9 +145,6 @@ public class client {
           }
           for(int i = 0; i < numClients; i++){
             threads[i].start();
-          }
-          while(containsLiveThread(threads)){
-            Thread.sleep(1000);
           }
           System.out.println("Done");
         } catch(Exception e){}
