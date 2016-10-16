@@ -58,9 +58,8 @@ public class client {
     handleArgs(args);
     switch(mode){
       case 1:
-        while(true){
-          handleServer(new Socket(hostName,3515));
-        }
+        handleServer(new Socket(hostName,3515));
+        System.out.println("Fin");
         break;
       default:
         handleMulti();
