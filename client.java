@@ -5,23 +5,7 @@ public class client {
   private static String hostName;
   private static int mode;
   private static int numClients;
-  public static void main(String[] args) throws IOException {
-    handleArgs(args);
-    switch(mode){
-      case 1:
-        handleServer(new Socket(hostName,3515));
-        break;
-      case 2:
-        new ClientThread(hostName,mode,numClients).start();
-        break;
-      case 3:
-        new ClientThread(hostName,mode,numClients).start();
-        break;
-    }
-    //read args
-    //default hostname
-    //Attempt To open communications between the server and client
-  }
+  //intialization functions
   public static void handleArgs(String[] args){
     if(args.length > 0){
       if(args.length == 3){
@@ -67,6 +51,19 @@ public class client {
       return null;
     }
   }
+
+  public static void main(String[] args) throws IOException {
+    handleArgs(args);
+    switch(mode){
+      case 1:
+        handleServer(new Socket(hostName,3515));
+        break;
+      default:
+        handleMulti();
+        break;
+    }
+  }
+  //handling functions
   public static void handleServer(Socket clientSocket) throws IOException{
     if(clientSocket != null) {
         try(
@@ -111,35 +108,15 @@ public class client {
     System.out.println("Goodbye - Session Complete");
     clientSocket.close();
   }
-}
-class ClientThread extends Thread{
-  //global variables
-  private int numberClients;
-  private String hostname = "192.168.100.124";
-  private int port = 3515;
-  private String path;
-  //1-single client, 2-heavyTest(netstat), 3-lightTest(date)
-  private int mode;
-  public ClientThread(String hostname){
-    mode = 1;
-    this.hostname = hostname;
-  }
-  public ClientThread(String hostname,int mode, int numberClients) {
-      this.mode = mode;
-      this.hostname = hostname;
-      if(mode != 1)
-        this.numberClients = numberClients;
-  }
-  @Override
-  public void run(){
-    switch(this.mode){
+  public static void handleMulti(){
+    switch(mode){
       case 2:
         //do light load
-        this.path = "lite"+this.numberClients;
+        this.path = "lite"+ numClients;
         try{
           System.out.println("id,time\n");
-          LiteThread[] threads = new LiteThread[this.numberClients];
-          for(int i = 0; i < this.numberClients; i++){
+          LiteThread[] threads = new LiteThread[numClients];
+          for(int i = 0; i < numClients; i++){
             threads[i] = new LiteThread(new Socket(this.hostname,this.port),
               i,this.path);
           }
@@ -150,11 +127,11 @@ class ClientThread extends Thread{
         break;
       case 3:
         //do heavy load
-        this.path = "heavy"+this.numberClients;
+        this.path = "heavy"+numClients;
         try{
           System.out.println("id,time\n");
-          HeavyThread[] threads = new HeavyThread[this.numberClients];
-          for(int i = 0; i < this.numberClients; i++){
+          HeavyThread[] threads = new HeavyThread[numClients];
+          for(int i = 0; i < numClients; i++){
             threads[i] = new HeavyThread(new Socket(this.hostname,this.port),
               i,this.path);
           }
@@ -163,7 +140,6 @@ class ClientThread extends Thread{
           }
         } catch(Exception e){}
         break;
-    }
   }
 }
 class HeavyThread extends Thread{
