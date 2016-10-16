@@ -117,19 +117,22 @@ public class client {
     clientSocket.close();
   }
   public static void handleMulti(){
+    CountDownLatch latch = new CountDownLatch(numClients);
     switch(mode){
       case 2:
         //do light load
         try{
           LiteThread[] threads = new LiteThread[numClients];
           for(int i = 0; i < numClients; i++){
-            threads[i] = new LiteThread(new Socket(hostName,port),i);
+            threads[i] = new LiteThread(new Socket(hostName,port),i,latch);
           }
-          //System.out.println("Starting Light Test");
-          //System.out.println("id,time\n");
+          System.out.println("Starting Light Test");
+          System.out.println("id,time\n");
           for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
+          latch.await();
+          System.out.println("Done");
         } catch(Exception e){}
         break;
       case 3:
@@ -137,13 +140,15 @@ public class client {
         try{
           HeavyThread[] threads = new HeavyThread[numClients];
           for(int i = 0; i < numClients; i++){
-            threads[i] = new HeavyThread(new Socket(hostName,port),i);
+            threads[i] = new HeavyThread(new Socket(hostName,port),i,latch);
           }
-        //  System.out.println("Starting Heavy Test");
-      //    System.out.println("id,time");
+          System.out.println("Starting Heavy Test");
+          System.out.println("id,time");
           for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
+          latch.await();
+          System.out.println("Done");
         } catch(Exception e){}
         break;
     }
@@ -153,15 +158,18 @@ class HeavyThread extends Thread{
   private Socket socket = null;
   private int id;
   private Test result;
-  HeavyThread(Socket client, int id){
+  private CountDownLatch latch;
+  HeavyThread(Socket client, int id, CountDownLatch latch){
     this.socket = client;
     this.id = id;
+    this.latch = latch;
   }
   @Override
   public void run(){
     try{
       performLoad(this.socket,this.result);
       System.out.println(id+","+this.result.toString());
+      latch.countDown();
     }catch(Exception e){
 
     }
@@ -210,9 +218,11 @@ class LiteThread extends Thread{
   private Socket socket = null;
   private int id;
   private Test result;
+  private CountDownLatch latch;
   LiteThread(Socket client, int id){
     this.socket = client;
     this.id = id;
+    this.latch = latch;
   }
   @Override
   public void run(){
@@ -221,6 +231,7 @@ class LiteThread extends Thread{
       synchronized (System.out){
         System.out.print(id+","+this.result.toString()+"\n");
       }
+      latch.countDown();
     } catch (Exception e) {
       System.out.println("err");
     }
