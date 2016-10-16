@@ -121,12 +121,12 @@ public class client {
       case 2:
         //do light load
         try{
-          System.out.println("Started Light Test");
-          System.out.println("id,time\n");
           LiteThread[] threads = new LiteThread[numClients];
           for(int i = 0; i < numClients; i++){
             threads[i] = new LiteThread(new Socket(hostName,port),i);
           }
+          System.out.println("Starting Light Test");
+          System.out.println("id,time\n");
           for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
@@ -135,12 +135,12 @@ public class client {
       case 3:
         //do heavy load
         try{
-          System.out.println("Started Heavy Test");
-          System.out.println("id,time");
           HeavyThread[] threads = new HeavyThread[numClients];
           for(int i = 0; i < numClients; i++){
             threads[i] = new HeavyThread(new Socket(hostName,port),i);
           }
+          System.out.println("Starting Heavy Test");
+          System.out.println("id,time");
           for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
@@ -161,9 +161,7 @@ class HeavyThread extends Thread{
   public void run(){
     try{
       performLoad(this.socket,this.result);
-      synchronized (System.out){
-        System.out.println(id+","+this.result.toString());
-      }
+      System.out.println(id+","+this.result.toString());
     }catch(Exception e){
 
     }
