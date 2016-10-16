@@ -241,7 +241,7 @@ class LiteThread extends Thread{
                 if((serverResponse = in.readLine()) != null) {
                     //reads user's input and forwards it to the Server
                     if(serverResponse.equals("Select Menu Option")) {
-                        out.println("4");
+                        out.println("1");
                         while(true){
                           if((serverResponse = in.readLine()) != null){
                             if(serverResponse.equals("Select Menu Option")){
