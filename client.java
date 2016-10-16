@@ -68,6 +68,7 @@ public class client {
         break;
       default:
         handleMulti();
+        System.out.println("Completed Test");
         break;
     }
   }
@@ -121,6 +122,7 @@ public class client {
       case 2:
         //do light load
         try{
+          System.out.println("Started Light Test");
           System.out.println("id,time\n");
           LiteThread[] threads = new LiteThread[numClients];
           for(int i = 0; i < numClients; i++){
@@ -129,12 +131,16 @@ public class client {
           for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
+          while(containsLiveThread(threads)){
+          }
+          System.out.println("Done");
         } catch(Exception e){}
         break;
       case 3:
         //do heavy load
         try{
-          System.out.println("id,time\n");
+          System.out.println("Started Heavy Test");
+          System.out.println("id,time");
           HeavyThread[] threads = new HeavyThread[numClients];
           for(int i = 0; i < numClients; i++){
             threads[i] = new HeavyThread(new Socket(hostName,port),i);
@@ -142,9 +148,19 @@ public class client {
           for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
+          while(containsLiveThread(threads)){
+          }
+          System.out.println("Done");
         } catch(Exception e){}
         break;
     }
+  }
+  private boolean containsLiveThread(Thread[] threads){
+    for(thread : threads){
+      if(thread.getState() != Thread.State.TERMINATED)
+        return true;
+    }
+    return false;
   }
 }
 class HeavyThread extends Thread{
@@ -184,14 +200,13 @@ class HeavyThread extends Thread{
                           if((serverResponse = in.readLine()) != null){
                             if(serverResponse.equals("Select Menu Option")){
                               temp.timeEndMillis = System.currentTimeMillis();
-                              synchronized (System.out){
-                                System.out.println(id+temp.toString());
-                              }
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    //Test.logResult(id,temp);
-                                    return;
+                                  synchronized (System.out){
+                                    System.out.println(id+","+temp.toString());
+                                  }
+                                  return;
                                 }
                               }
                             }
@@ -247,7 +262,9 @@ class LiteThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    Test.logResult(id,temp);
+                                    synchronized (System.out){
+                                      System.out.println(id+","+temp.toString());
+                                    }
                                     return;
                                 }
                               }
@@ -272,9 +289,6 @@ class Test{
   }
   public void setEnd(long end){
     this.timeEndMillis = end;
-  }
-  public static void logResult(int id, Test val) throws IOException{
-    System.out.println(id+","+","+val.toString()+"\n");
   }
   public String toString(){
     return Long.toString(timeEndMillis - timeStartMillis);
