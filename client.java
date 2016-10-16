@@ -118,10 +118,10 @@ public class client {
     clientSocket.close();
   }
   public static void handleMulti(){
+    CountDownLatch latch = new CountDownLatch(numClients);
     switch(mode){
       case 2:
         //do light load
-        CountDownLatch latch = new CountDownLatch(numClients);
         try{
           LiteThread[] threads = new LiteThread[numClients];
           for(int i = 0; i < numClients; i++){
@@ -142,7 +142,6 @@ public class client {
         break;
       case 3:
         //do heavy load
-        CountDownLatch latch = new CountDownLatch(numClients);
         try{
           HeavyThread[] threads = new HeavyThread[numClients];
           for(int i = 0; i < numClients; i++){
