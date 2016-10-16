@@ -124,11 +124,13 @@ class ClientThread extends Thread{
         } catch(Exception e){}
         break;
       default:
-        handleServer(new Socket(this.hostname,this.port));
+        try{
+          handleServer(new Socket(this.hostname,this.port));
+        } catch(Exception e){}
         break;
     }
   }
-  public static void handleServer(Socket clientSocket){
+  public static void handleServer(Socket clientSocket) throws IOException{
     if(clientSocket != null) {
         try(
                 //Attempt to create the reciving and outputing communications
