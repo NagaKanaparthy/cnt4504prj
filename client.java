@@ -126,6 +126,7 @@ public class client {
           LiteThread[] threads = new LiteThread[numClients];
           for(int i = 0; i < numClients; i++){
             threads[i] = new LiteThread(new Socket(hostName,port),i,latch);
+            threads[i].join();
           }
           System.out.println("Starting Light Test");
           System.out.println("id,time\n");
@@ -145,6 +146,7 @@ public class client {
           HeavyThread[] threads = new HeavyThread[numClients];
           for(int i = 0; i < numClients; i++){
             threads[i] = new HeavyThread(new Socket(hostName,port),i,latch);
+            threads[i].join();
           }
           System.out.println("Starting Heavy Test");
           System.out.println("id,time");
