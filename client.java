@@ -105,7 +105,7 @@ public class client {
                 //printResponse
             }
         } catch (IOException e) {
-            System.err.println(e.toString());
+            System.err.println("Fail: "+e.toString());
         }
     }
     System.out.println("Goodbye - Session Complete");
