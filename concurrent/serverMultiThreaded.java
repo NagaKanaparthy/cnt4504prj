@@ -73,7 +73,8 @@ class multiServerThread extends Thread {
                 out.println(CommandCaller.respondData(inputLine));
                 //checkes if cmd was the exit Option
                 if(Integer.parseInt(inputLine) == 7) {
-                    break;
+                  out.println("Exit");
+                  break;
                 }
                 //end of response fix
                 out.println("---Response-Compelete---");

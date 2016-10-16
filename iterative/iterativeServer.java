@@ -56,8 +56,10 @@ processing thread (child)
 						out.println(CommandCaller.respondData(inputLine));
 						//checkes if cmd was the exit Option
 						try{
-							if(Integer.parseInt(inputLine) == 7)
+							if(Integer.parseInt(inputLine) == 7){
+								out.println("Exit");
 								break;
+							}
 						}
 						catch(Exception e){
 							out.println("Invalid Choice");
