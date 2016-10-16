@@ -181,6 +181,7 @@ class HeavyThread extends Thread{
     try{
       this.performLoad(this.socket);
       this.latch.countDown();
+      System.out.print("DDD");
     }catch(Exception e){
 
     }
