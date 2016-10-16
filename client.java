@@ -151,7 +151,8 @@ public class client {
 }
 class HeavyThread extends Thread{
   private Socket socket = null;
-  private static int id;
+  private int id;
+  private Test result;
   HeavyThread(Socket client, int id){
     this.socket = client;
     this.id = id;
@@ -159,12 +160,15 @@ class HeavyThread extends Thread{
   @Override
   public void run(){
     try{
-      performLoad(this.socket);
+      performLoad(this.socket,this.result);
+      synchronized (System.out){
+        System.out.println(id+","+this.result.toString());
+      }
     }catch(Exception e){
 
     }
   }
-  public static void performLoad(Socket clientSocket) throws IOException{
+  public static void performLoad(Socket clientSocket, Test res) throws IOException{
     if(clientSocket != null) {
         try(
                 //Attempt to create the reciving and outputing communications
@@ -174,8 +178,7 @@ class HeavyThread extends Thread{
             ) {
             //Create response Variables
             String serverResponse;
-            Test temp;
-            temp = new Test(System.currentTimeMillis());
+            res = new Test(System.currentTimeMillis());
             while (!clientSocket.isClosed()) {
               //start Timer
                 if((serverResponse = in.readLine()) != null) {
@@ -185,13 +188,10 @@ class HeavyThread extends Thread{
                         while(true){
                           if((serverResponse = in.readLine()) != null){
                             if(serverResponse.equals("Select Menu Option")){
-                              temp.timeEndMillis = System.currentTimeMillis();
+                              res.timeEndMillis = System.currentTimeMillis();
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                  //synchronized (System.out){
-                                    System.out.println(id+","+temp.toString());
-                                  //}
                                   return;
                                 }
                               }
@@ -210,7 +210,8 @@ class HeavyThread extends Thread{
 }
 class LiteThread extends Thread{
   private Socket socket = null;
-  private static int id;
+  private int id;
+  private Test result;
   LiteThread(Socket client, int id){
     this.socket = client;
     this.id = id;
@@ -218,12 +219,15 @@ class LiteThread extends Thread{
   @Override
   public void run(){
     try{
-      performLoad(this.socket);
+      performLoad(this.socket, this.result);
+      synchronized (System.out){
+        System.out.println(id+","+this.result.toString());
+      }
     } catch (Exception e) {
 
     }
   }
-  public static void performLoad(Socket clientSocket) throws IOException{
+  public static void performLoad(Socket clientSocket, Test res) throws IOException{
     if(clientSocket != null) {
         try(
                 //Attempt to create the reciving and outputing communications
@@ -233,8 +237,7 @@ class LiteThread extends Thread{
             ) {
             //Create response Variables
             String serverResponse;
-            Test temp;
-            temp = new Test(System.currentTimeMillis());
+            res = new Test(System.currentTimeMillis());
             while (!clientSocket.isClosed()) {
               //start Timer
                 if((serverResponse = in.readLine()) != null) {
@@ -244,13 +247,10 @@ class LiteThread extends Thread{
                         while(true){
                           if((serverResponse = in.readLine()) != null){
                             if(serverResponse.equals("Select Menu Option")){
-                              temp.timeEndMillis = System.currentTimeMillis();
+                              res.timeEndMillis = System.currentTimeMillis();
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    synchronized (System.out){
-                                      System.out.println(id+","+temp.toString());
-                                    }
                                     return;
                                 }
                               }
