@@ -56,7 +56,8 @@ processing thread (child)
 						//respond with correct response
 						out.println(CommandCaller.respondData(inputLine));
 						//checkes if cmd was the exit Option
-						try(Integer.parseInt(inputLine) == 7) {
+						try{
+							if(Integer.parseInt(inputLine) == 7)
 								break;
 						}
 						catch(Exception e){
