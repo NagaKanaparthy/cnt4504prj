@@ -171,8 +171,8 @@ class ClientThread extends Thread{
 }
 class HeavyThread extends Thread{
   private Socket socket = null;
-  private int id;
-  private String path;
+  private static int id;
+  private static String path;
   HeavyThread(Socket client, int id, String path){
     this.socket = client;
     this.id = id;
@@ -227,8 +227,8 @@ class HeavyThread extends Thread{
 }
 class LiteThread extends Thread{
   private Socket socket = null;
-  private int id;
-  private String path;
+  private static int id;
+  private static String path;
   LiteThread(Socket client, int id, String path){
     this.socket = client;
     this.id = id;
