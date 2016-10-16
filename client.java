@@ -179,9 +179,10 @@ class HeavyThread extends Thread{
   @Override
   public void run(){
     try{
+      System.out.print("DDD");
       this.performLoad(this.socket);
       this.latch.countDown();
-      System.out.print("DDD");
+
     }catch(Exception e){
 
     }
