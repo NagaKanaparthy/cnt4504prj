@@ -22,6 +22,9 @@ public class client {
         mode = 1;
       }
     }
+    else{
+      mode = 1;
+    }
     hostName = getHostname(args);
   }
   public static String getHostname(String[] cmdline){
