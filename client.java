@@ -169,7 +169,6 @@ class HeavyThread extends Thread{
   public void run(){
     try{
       performLoad(this.socket,this.result);
-      System.out.println(id+","+this.result.toString());
       latch.countDown();
     }catch(Exception e){
 
@@ -229,9 +228,6 @@ class LiteThread extends Thread{
   public void run(){
     try{
       performLoad(this.socket, this.result);
-      synchronized (System.out){
-        System.out.print(id+","+this.result.toString()+"\n");
-      }
       latch.countDown();
     } catch (Exception e) {
       System.out.println("err");
