@@ -181,7 +181,7 @@ class HeavyThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    temp.logResult(id);
+                                    Test.logResult(id,temp);
                                     return;
                                 }
                               }
@@ -238,7 +238,7 @@ class LiteThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    temp.logResult(id);
+                                    Test.logResult(id,temp);
                                     return;
                                 }
                               }
@@ -264,8 +264,8 @@ class Test{
   public void setEnd(long end){
     this.timeEndMillis = end;
   }
-  public void logResult(int id) throws IOException{
-    System.out.println(id+","+","+this.toString()+"\n");
+  public static void logResult(int id, Test val) throws IOException{
+    System.out.println(id+","+","+val.toString()+"\n");
   }
   public String toString(){
     return Long.toString(timeEndMillis - timeStartMillis);
