@@ -186,7 +186,11 @@ class HeavyThread extends Thread{
   }
   @Override
   public void run(){
-    performLoad(this.socket);
+    try{
+      performLoad(this.socket);
+    }catch(Exception e){
+
+    }
   }
   public static void performLoad(Socket clientSocket) throws IOException{
     if(clientSocket != null) {
@@ -241,7 +245,11 @@ class LiteThread extends Thread{
   }
   @Override
   public void run(){
-    performLoad(this.socket);
+    try{
+      performLoad(this.socket);
+    } catch (Exception e) {
+
+    }
   }
   public static void performLoad(Socket clientSocket) throws IOException{
     if(clientSocket != null) {
