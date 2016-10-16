@@ -219,7 +219,7 @@ class LiteThread extends Thread{
     try{
       performLoad(this.socket, this.result);
       synchronized (System.out){
-        System.out.println(id+","+this.result.toString());
+        System.out.print(id+","+this.result.toString()+"\n");
       }
     } catch (Exception e) {
 
