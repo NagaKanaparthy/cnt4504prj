@@ -212,6 +212,7 @@ class HeavyThread extends Thread{
                                 serverResponse = in.readLine();
                               }while(!serverResponse.equals("Exit"));
                               clientSocket.close();
+                              break;
                             }
                           }
                         }
