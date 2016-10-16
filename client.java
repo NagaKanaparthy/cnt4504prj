@@ -182,7 +182,7 @@ class HeavyThread extends Thread{
                             if(serverResponse.equals("Select Menu Option")){
                               temp.timeEndMillis = System.currentTimeMillis();
                               synchronized (System.out){
-                                System.out.println(this.id+temp.toString());
+                                System.out.println(id+temp.toString());
                               }
                               out.println("7");
                               while(true){
