@@ -26,15 +26,12 @@ public class client {
     if(args.length > 0){
       if(args.length == 3){
         if(Integer.parseInt(args[1]) == 2){
-          this.mode = 2;
+          mode = 2;
         }
         else if (Integer.parseInt(args[1]) == 3){
-          this.mode = 3;
+          mode = 3;
         }
-        this.numClients = Integer.parseInt(args[2]);
-      }
-      else{
-        return 1;
+        numClients = Integer.parseInt(args[2]);
       }
     }
     hostName = getHostname(args);
@@ -71,7 +68,7 @@ public class client {
     }
   }
 }
-class ClientThread{
+class ClientThread extends Thread{
   //global variables
   private int numberClients;
   private String hostname = "192.168.100.124";
@@ -210,7 +207,7 @@ class HeavyThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    temp.logResult(this.path);
+                                    temp.logResult(path);
                                     return;
                                 }
                               }
@@ -266,7 +263,7 @@ class LiteThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    temp.logResult(this.path);
+                                    temp.logResult(path);
                                     return;
                                 }
                               }
@@ -295,7 +292,7 @@ class Test{
   }
   public void logResult(String path){
     FileWriter output = new FileWriter(path, true);
-    output.write(i+","+","+this.toString+"\n");
+    output.write(i+","+","+this.toString()+"\n");
     output.close();
   }
   public String toString(){
