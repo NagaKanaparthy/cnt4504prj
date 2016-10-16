@@ -155,7 +155,7 @@ public class client {
         break;
     }
   }
-  private boolean containsLiveThread(Thread[] threads){
+  private static boolean containsLiveThread(Thread[] threads){
     for(Thread thread : threads){
       if(thread.getState() != Thread.State.TERMINATED)
         return true;
