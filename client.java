@@ -126,7 +126,6 @@ public class client {
           LiteThread[] threads = new LiteThread[numClients];
           for(int i = 0; i < numClients; i++){
             threads[i] = new LiteThread(new Socket(hostName,port),i);
-            //threads[i].setDaemon(true);
           }
           for(int i = 0; i < numClients; i++){
             threads[i].start();
@@ -141,7 +140,6 @@ public class client {
           HeavyThread[] threads = new HeavyThread[numClients];
           for(int i = 0; i < numClients; i++){
             threads[i] = new HeavyThread(new Socket(hostName,port),i);
-            //threads[i].setDaemon(true);
           }
           for(int i = 0; i < numClients; i++){
             threads[i].start();
@@ -149,13 +147,6 @@ public class client {
         } catch(Exception e){}
         break;
     }
-  }
-  private static boolean containsLiveThread(Thread[] threads){
-    for(Thread thread : threads){
-      if(thread.getState() != Thread.State.TERMINATED)
-        return true;
-    }
-    return false;
   }
 }
 class HeavyThread extends Thread{
