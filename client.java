@@ -118,7 +118,6 @@ public class client {
     clientSocket.close();
   }
   public static void handleMulti(){
-    CountDownLatch latch = new CountDownLatch(numClients);
     switch(mode){
       case 2:
         //do light load
@@ -144,10 +143,11 @@ public class client {
         break;
       case 3:
         //do heavy load
+        CountDownLatch latch = new CountDownLatch(numClients);
         try{
           HeavyThread[] threads = new HeavyThread[numClients];
           for(int i = 0; i < numClients; i++){
-            threads[i] = new HeavyThread(new Socket(hostName,port),i,latch);
+            threads[i] = new HeavyThread(new Socket(hostName,port),latch);
             threads[i].join();
           }
           System.out.println("Starting Heavy Test");
@@ -155,7 +155,7 @@ public class client {
           for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
-          //latch.await();
+          latch.await();
           for(int i = 0; i < numClients; i++){
             System.out.println(threads[i].toString());
           }
@@ -167,28 +167,25 @@ public class client {
 }
 class HeavyThread extends Thread{
   private Socket socket = null;
-  private int id;
   private Test result;
   private CountDownLatch latch;
-  HeavyThread(Socket client, int id, CountDownLatch latch){
+  HeavyThread(Socket client, CountDownLatch latch){
     this.socket = client;
-    this.id = id;
     this.latch = latch;
   }
   public String toString(){
-    return this.id+","+result.toString();
+    return result.toString();
   }
   @Override
   public void run(){
     try{
-      performLoad(this.socket,this.result);
-      Test.appendToFile(this.id,this.result);
-      //latch.countDown();
+      this.performLoad(this.socket,this.result);
+      latch.countDown();
     }catch(Exception e){
 
     }
   }
-  public static void performLoad(Socket clientSocket, Test res) throws IOException{
+  public void performLoad(Socket clientSocket, Test res) throws IOException{
     if(clientSocket != null) {
         try(
                 //Attempt to create the reciving and outputing communications
