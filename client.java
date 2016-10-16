@@ -161,7 +161,7 @@ public class client {
     }
   }
 }
-class HeavyThread extends Thread{
+class HeavyThread extends Runnable{
   private Socket socket = null;
   private int id;
   private Test result;
@@ -223,7 +223,7 @@ class HeavyThread extends Thread{
     }
   }
 }
-class LiteThread extends Thread{
+class LiteThread extends Runnable{
   private Socket socket = null;
   private int id;
   private Test result;
