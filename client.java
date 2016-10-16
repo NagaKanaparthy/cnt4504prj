@@ -151,17 +151,14 @@ public class client {
           for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
-          latch.await();
-          for(int i = 0; i < numClients; i++){
-            System.out.println(threads[i].toString());
-          }
+          //latch.await();
           System.out.println("Done");
         } catch(Exception e){}
         break;
     }
   }
 }
-class HeavyThread extends Runnable{
+class HeavyThread extends Thread{
   private Socket socket = null;
   private int id;
   private Test result;
@@ -178,7 +175,8 @@ class HeavyThread extends Runnable{
   public void run(){
     try{
       performLoad(this.socket,this.result);
-      latch.countDown();
+      Test.appendToFile(this.id,this.result);
+      //latch.countDown();
     }catch(Exception e){
 
     }
@@ -223,7 +221,7 @@ class HeavyThread extends Runnable{
     }
   }
 }
-class LiteThread extends Runnable{
+class LiteThread extends Thread{
   private Socket socket = null;
   private int id;
   private Test result;
@@ -240,7 +238,8 @@ class LiteThread extends Runnable{
   public void run(){
     try{
       performLoad(this.socket, this.result);
-      latch.countDown();
+      Test.appendToFile(this.id,this.result);
+    // latch.countDown();
     } catch (Exception e) {
       System.out.println("err");
     }
@@ -296,5 +295,9 @@ class Test{
   }
   public String toString(){
     return Long.toString(timeEndMillis - timeStartMillis);
+  }
+  public static void appendToFile(int id, Test val){
+    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("t",true)));
+    out.println(id+","+val.toString());
   }
 }
