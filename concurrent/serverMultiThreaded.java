@@ -18,7 +18,7 @@ public class serverMultiThreaded {
         System.out.println("Server Started Up");
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
             while (true) {
-                new projectOneMultiServerThread(serverSocket.accept()).start();
+                new multiServerThread(serverSocket.accept()).start();
             }
         } catch (IOException e) {
             System.err.println("Could not listen on port " + portNumber);
@@ -30,7 +30,7 @@ public class serverMultiThreaded {
   Class: projectOneMultiServerThread
   Purpose: this is the thread class that will handle each client
 */
-class projectOneMultiServerThread extends Thread {
+class multiServerThread extends Thread {
     //global variables
     private Socket socket = null;
     //constructor
