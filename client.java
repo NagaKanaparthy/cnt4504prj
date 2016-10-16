@@ -18,6 +18,9 @@ public class client {
         }
         numClients = Integer.parseInt(args[2]);
       }
+      else{
+        mode = 1;
+      }
     }
     hostName = getHostname(args);
   }
