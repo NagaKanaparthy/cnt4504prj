@@ -45,7 +45,7 @@ class projectOneMultiServerThread extends Thread {
       Return: NONE
       Notes: this method is ran when class is intialized.
     */
-    public void run() {
+    public void run() throws IOException{
         //Variables
         PrintWriter out;
         BufferedReader in;
