@@ -35,14 +35,19 @@ public class client {
                             break;
                         }
                         //reads user's input and forwards it to the Server
-                        if(serverResponse.equals("Select Menu Option")) {
+                        else if(serverResponse.equals("Select Menu Option")) {
                             userResponse = userInput.readLine();
                             if (userResponse != null) {
                                 out.println(userResponse);
                             }
                         }
-                    } else
-                        System.out.println("Null");
+                        else{
+                          if (userResponse != null) {
+                              out.println(userResponse);
+                          }
+                        }
+                    }
+                    //printResponse
                 }
             } catch (IOException e) {
                 System.err.println(e.toString());
