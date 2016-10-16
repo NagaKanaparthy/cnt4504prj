@@ -133,6 +133,9 @@ public class client {
             threads[i].start();
           }
           latch.await();
+          for(int i = 0; i < numClients; i++){
+            System.out.println(threads[i].toString());
+          }
           System.out.println("Done");
         } catch(Exception e){}
         break;
@@ -149,6 +152,9 @@ public class client {
             threads[i].start();
           }
           latch.await();
+          for(int i = 0; i < numClients; i++){
+            System.out.println(threads[i].toString());
+          }
           System.out.println("Done");
         } catch(Exception e){}
         break;
@@ -164,6 +170,9 @@ class HeavyThread extends Thread{
     this.socket = client;
     this.id = id;
     this.latch = latch;
+  }
+  public String toString(){
+    return this.id+","+result.toString();
   }
   @Override
   public void run(){
