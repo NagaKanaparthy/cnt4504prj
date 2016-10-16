@@ -116,7 +116,7 @@ class ClientThread{
         HeavyThread[] threads = new HeavyThread[this.numberClients];
         for(int i = 0; i < this.numberClients; i++){
           threads[i] = new HeavyThread(new Socket(this.hostname,this.port),
-            i,this.path));
+            i,this.path);
         }
         for(int i = 0; i < this.numberClients; i++){
           treads[i].start();
@@ -290,7 +290,7 @@ class Test{
   Test(long start){
     this.timeStartMillis = start;
   }
-  public setEnd(long end){
+  public void setEnd(long end){
     this.timeEndMillis = end;
   }
   public void logResult(String path){
