@@ -198,6 +198,7 @@ class HeavyThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
+                                  clientSocket.close();
                                   return;
                                 }
                               }
@@ -211,7 +212,6 @@ class HeavyThread extends Thread{
             System.err.println(e.toString());
         }
     }
-    clientSocket.close();
   }
 }
 class LiteThread extends Thread{
@@ -257,7 +257,8 @@ class LiteThread extends Thread{
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
-                                    return;
+                                  clientSocket.close();
+                                  return;
                                 }
                               }
                             }
@@ -270,7 +271,6 @@ class LiteThread extends Thread{
             System.err.println(e.toString());
         }
     }
-    clientSocket.close();
   }
 }
 class Test{
