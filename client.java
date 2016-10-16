@@ -9,13 +9,13 @@ public class client {
     handleArgs(args);
     switch(mode){
       case 1:
-        new ClientThread(this.hostname).start();
+        new ClientThread(hostName).start();
         break;
       case 2:
-        new ClientThread(this.hostname,this.mode,this.numClients).start();
+        new ClientThread(hostName,mode,numClients).start();
         break;
       case 3:
-        new ClientThread(this.hostname,this.mode,this.numClients).start();
+        new ClientThread(hostName,mode,numClients).start();
         break;
     }
     //read args
@@ -37,7 +37,7 @@ public class client {
         return 1;
       }
     }
-    this.hostName = getHostname(args);
+    hostName = getHostname(args);
   }
   public static String getHostname(String[] cmdline){
     String hostName = "192.168.100.124";
@@ -104,7 +104,7 @@ class ClientThread{
             i,this.path);
         }
         for(int i = 0; i < this.numberClients; i++){
-          treads[i].start();
+          threads[i].start();
         }
         break;
       case 3:
@@ -119,7 +119,7 @@ class ClientThread{
             i,this.path);
         }
         for(int i = 0; i < this.numberClients; i++){
-          treads[i].start();
+          threads[i].start();
         }
         break;
       default:
