@@ -137,9 +137,7 @@ class ClientThread extends Thread{
         //do light load
         this.path = "lite"+this.numberClients;
         try{
-          FileWriter output = new FileWriter(path, false);
-          output.write("id,time\n");
-          output.close();
+          System.out.println("id,time\n");
           LiteThread[] threads = new LiteThread[this.numberClients];
           for(int i = 0; i < this.numberClients; i++){
             threads[i] = new LiteThread(new Socket(this.hostname,this.port),
@@ -154,9 +152,7 @@ class ClientThread extends Thread{
         //do heavy load
         this.path = "heavy"+this.numberClients;
         try{
-          FileWriter output = new FileWriter(path, false);
-          output.write("id,time\n");
-          output.close();
+          System.out.println("id,time\n");
           HeavyThread[] threads = new HeavyThread[this.numberClients];
           for(int i = 0; i < this.numberClients; i++){
             threads[i] = new HeavyThread(new Socket(this.hostname,this.port),
@@ -298,9 +294,7 @@ class Test{
     this.timeEndMillis = end;
   }
   public void logResult(String path, int id) throws IOException{
-    FileWriter output = new FileWriter(path, true);
-    output.write(id+","+","+this.toString()+"\n");
-    output.close();
+    System.out.println(id+","+","+this.toString()+"\n");
   }
   public String toString(){
     return Long.toString(timeEndMillis - timeStartMillis);
