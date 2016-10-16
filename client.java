@@ -58,7 +58,9 @@ public class client {
     handleArgs(args);
     switch(mode){
       case 1:
-        handleServer(new Socket(hostName,3515));
+        while(true){
+          handleServer(new Socket(hostName,3515));
+        }
         break;
       default:
         handleMulti();
