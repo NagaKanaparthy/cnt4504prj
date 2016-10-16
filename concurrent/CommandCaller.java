@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.*;
 public class CommandCaller{
 	public static final String menu = "1. Host current Date and Time\n2. Host uptime\n3. Host memory use\n4. Host Netstat\n5. Host current users\n6. Host running processes\n7. Quit";
 	/*
