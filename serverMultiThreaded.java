@@ -48,8 +48,8 @@ class projectOneMultiServerThread extends Thread {
    @Override
     public void run(){
         //Variables
-        PrintWriter out;
-        BufferedReader in;
+        PrintWriter out = new PrintWriter();
+        BufferedReader in = new BufferedReader();
         String inputLine;
         String menu = "1. Host current Date and Time\n2. Host uptime\n3. Host memory use\n4. Host Netstat\n5. Host current users\n6. Host running processes\n7. Quit";
         //attempt to set up input and output streams
