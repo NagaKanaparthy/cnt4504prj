@@ -121,25 +121,23 @@ public class client {
     switch(mode){
       case 2:
         //do light load
-        /*
+        CountDownLatch latch = new CountDownLatch(numClients);
         try{
           LiteThread[] threads = new LiteThread[numClients];
           for(int i = 0; i < numClients; i++){
-            threads[i] = new LiteThread(new Socket(hostName,port),i,latch);
+            threads[i] = new LiteThread(new Socket(hostName,port),latch);
             threads[i].join();
           }
           System.out.println("Starting Light Test");
-          System.out.println("id,time\n");
+          System.out.println("id,time");
           for(int i = 0; i < numClients; i++){
             threads[i].start();
           }
           latch.await();
           for(int i = 0; i < numClients; i++){
-            System.out.println(threads[i].toString());
+            System.out.println(i+","+threads[i].toString());
           }
           System.out.println("Done");
-        } catch(Exception e){}
-          */
         break;
       case 3:
         //do heavy load
@@ -157,11 +155,71 @@ public class client {
           }
           latch.await();
           for(int i = 0; i < numClients; i++){
-            System.out.println(id+","+threads[i].toString());
+            System.out.println(i+","+threads[i].toString());
           }
           System.out.println("Done");
         } catch(Exception e){}
         break;
+    }
+  }
+}
+class LiteThread extends Thread{
+  private Socket socket = null;
+  private Test result;
+  private CountDownLatch latch;
+  LiteThread(Socket client, CountDownLatch latch){
+    this.socket = client;
+    this.latch = latch;
+  }
+  public String toString(){
+    return result.toString();
+  }
+  @Override
+  public void run(){
+    try{
+      this.performLoad(this.socket);
+      this.latch.countDown();
+
+    }catch(Exception e){
+
+    }
+  }
+  public void performLoad(Socket clientSocket) throws IOException{
+    if(clientSocket != null) {
+        try(
+                //Attempt to create the reciving and outputing communications
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream()));
+            ) {
+            //Create response Variables
+            String serverResponse;
+            this.result = new Test(System.currentTimeMillis());
+            while (!clientSocket.isClosed()) {
+              //start Timer
+                if((serverResponse = in.readLine()) != null) {
+                    //reads user's input and forwards it to the Server
+                    if(serverResponse.equals("Select Menu Option")) {
+                        out.println("1");
+                        while(true){
+                          if((serverResponse = in.readLine()) != null){
+                            if(serverResponse.equals("Select Menu Option")){
+                              this.result.timeEndMillis = System.currentTimeMillis();
+                              out.println("7");
+                              do{
+                                serverResponse = in.readLine();
+                              }while(!serverResponse.equals("Exit"));
+                              clientSocket.close();
+                              break;
+                            }
+                          }
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println(e.toString());
+        }
     }
   }
 }
