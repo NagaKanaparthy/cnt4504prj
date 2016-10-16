@@ -121,7 +121,7 @@ class ClientThread extends Thread{
           for(int i = 0; i < this.numberClients; i++){
             threads[i].start();
           }
-        }
+        } catch(Exception e){}
         break;
       default:
         handleServer(new Socket(this.hostname,this.port));
