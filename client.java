@@ -179,13 +179,13 @@ class HeavyThread extends Thread{
   @Override
   public void run(){
     try{
-      this.performLoad(this.socket,this.result);
+      this.performLoad(this.socket);
       latch.countDown();
     }catch(Exception e){
 
     }
   }
-  public void performLoad(Socket clientSocket, Test res) throws IOException{
+  public void performLoad(Socket clientSocket) throws IOException{
     if(clientSocket != null) {
         try(
                 //Attempt to create the reciving and outputing communications
@@ -195,7 +195,7 @@ class HeavyThread extends Thread{
             ) {
             //Create response Variables
             String serverResponse;
-            res = new Test(System.currentTimeMillis());
+            this.result = new Test(System.currentTimeMillis());
             while (!clientSocket.isClosed()) {
               //start Timer
                 if((serverResponse = in.readLine()) != null) {
@@ -205,7 +205,7 @@ class HeavyThread extends Thread{
                         while(true){
                           if((serverResponse = in.readLine()) != null){
                             if(serverResponse.equals("Select Menu Option")){
-                              res.timeEndMillis = System.currentTimeMillis();
+                              this.result.timeEndMillis = System.currentTimeMillis();
                               out.println("7");
                               while(true){
                                 if (serverResponse.equals("Exit")) {
