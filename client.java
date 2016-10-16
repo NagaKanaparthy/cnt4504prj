@@ -138,6 +138,7 @@ public class client {
             System.out.println(i+","+threads[i].toString());
           }
           System.out.println("Done");
+        }catch (Exception e) {}
         break;
       case 3:
         //do heavy load
