@@ -132,6 +132,7 @@ public class client {
             threads[i].start();
           }
           while(containsLiveThread(threads)){
+            Thread.sleep(1000);
           }
           System.out.println("Done");
         } catch(Exception e){}
@@ -149,6 +150,7 @@ public class client {
             threads[i].start();
           }
           while(containsLiveThread(threads)){
+            Thread.sleep(1000);
           }
           System.out.println("Done");
         } catch(Exception e){}
