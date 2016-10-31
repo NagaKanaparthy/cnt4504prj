@@ -1,4 +1,4 @@
-
+import java.io.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -44,7 +44,7 @@ public class Client{
       threads[i] = new ProcessThread(host,option);
       threads[i].join();
     }
-    System.out.println("Starting "+this.option+" Test");
+    System.out.println("Starting "+option+" Test");
     System.out.println("id,time");
     for(int i = 0; i < numClients; i++){
       threads[i].start();
@@ -99,6 +99,27 @@ class ProcessThread extends Thread{
     } catch (Exception e) {
         System.err.println("Client exception: " + e.toString());
         e.printStackTrace();
+    }
+  }
+}
+class Test{
+  public long timeStartMillis;
+  public long timeEndMillis;
+  Test(long start){
+    this.timeStartMillis = start;
+  }
+  public void setEnd(long end){
+    this.timeEndMillis = end;
+  }
+  public String toString(){
+    return Long.toString(timeEndMillis - timeStartMillis);
+  }
+  public static void appendToFile(int id, Test val){
+    try{
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("t",true)));
+      out.println(id+","+val.toString());
+    } catch (Exception e) {
+      System.out.println("NOOO");
     }
   }
 }
