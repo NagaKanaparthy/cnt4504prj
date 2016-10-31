@@ -40,19 +40,23 @@ public class Client{
   public static void handleMulti(String host, String option, String clients){
     int numClients = Integer.parseInt(clients);
     ProcessThread[] threads = new ProcessThread[numClients];
-    for(int i = 0; i < numClients; i++){
-      threads[i] = new ProcessThread(host,option);
-      threads[i].join();
+    try{
+      for(int i = 0; i < numClients; i++){
+        threads[i] = new ProcessThread(host,option);
+        threads[i].join();
+      }
+      System.out.println("Starting "+option+" Test");
+      System.out.println("id,time");
+      for(int i = 0; i < numClients; i++){
+        threads[i].start();
+      }
+      for(int i = 0; i < numClients; i++){
+        System.out.println(i+","+threads[i].toString());
+      }
+      System.out.println("Done");
+    } catch(Exception e){
+      System.out.println("ERROR");
     }
-    System.out.println("Starting "+option+" Test");
-    System.out.println("id,time");
-    for(int i = 0; i < numClients; i++){
-      threads[i].start();
-    }
-    for(int i = 0; i < numClients; i++){
-      System.out.println(i+","+threads[i].toString());
-    }
-    System.out.println("Done");
   }
 }
 class ProcessThread extends Thread{
@@ -77,7 +81,7 @@ class ProcessThread extends Thread{
             stub.getDate();
             break;
           case "2":
-            stub.getHostname();
+            stub.getUptime();
             break;
           case "3":
             stub.getMemory();
