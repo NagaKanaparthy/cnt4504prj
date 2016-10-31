@@ -29,6 +29,9 @@ public class ServerRMI implements Commander{
 public String getDate(){ return getCommand("date"); }
 /*
 * */
+public String getMemory(){ return getCommandResults("free -m"); }
+/*
+**/
 public String getUptime(){ return getCommand("uptime"); }
 /*
 * */
