@@ -4,7 +4,7 @@ import java.rmi.registry.Registry;
 
 public class Client{
     public static void main(String[] args){
-      String hostName = handleArgs(args);
+      String hostName = getHostname(args);
       if(args[1] != null && args[2] != null)
         handleMulti(hostName,args[1], args[2]);
       else
