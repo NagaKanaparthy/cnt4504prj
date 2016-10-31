@@ -34,7 +34,7 @@ public class Client{
               System.out.println("Error with value read, exiting now");
               System.exit(1);
           }
-        return null;
+        return hostName;
       }
   }
   public static void handleMulti(String host, String option, String clients){
