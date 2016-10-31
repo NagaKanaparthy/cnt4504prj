@@ -53,7 +53,7 @@ public class Client{
       System.out.println(i+","+threads[i].toString());
     }
     System.out.println("Done");
-  } catch(Exception e){}
+  }
 }
 class ProcessThread extends Thread{
   private String host;
